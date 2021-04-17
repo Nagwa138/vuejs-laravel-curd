@@ -3,9 +3,9 @@
 
     <div>
 
-        
+        <a :href="href(post.id)">  
         {{ post.content }} 
-        
+        </a>
         <!-- Button trigger modal -->
         <Edit v-if="edit" :post="post" v-on:itemUpdated="updated()"></Edit>
          <button v-if="!edit"  class="button" type="button" style="background-color:green;" @click="activeEdit()">Edit</button>
@@ -30,11 +30,11 @@ props:['post' , 'user'],
 
   data: function () {
     return {
-        edit:false
-    };
+        edit:false,
+    }
   },
   methods:{
-      
+     
       deletePost(){
         axios.delete('api/post/' + this.post.id).then((response) => {
             if(response.data.success){
@@ -58,10 +58,11 @@ console.log('Deleted');
       },
       activeEdit(){
           this.edit = true;
-      }
+      }, href (id) {
+    return  '../post/show/' + id;
+  }
       
-  }, 
-
+  },
 };
 </script>
 

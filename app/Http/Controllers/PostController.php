@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Post;
+use App\User;
 use Validator;
 
 class PostController extends Controller
@@ -13,9 +14,11 @@ class PostController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+
     public function index()
     {
-        $posts = Post::all();
+        $posts = Post::orderBy('updated_at', 'DESC')->get();
         return response()->json(['posts'=>$posts]);
     }
 
@@ -60,7 +63,10 @@ class PostController extends Controller
      */
     public function show($id)
     {
-        //
+        $this->middleware('auth');
+        $post = Post::find($id);
+        $post->load('user');
+        return view('post.show' , compact('post'));
     }
 
     /**
@@ -116,5 +122,10 @@ class PostController extends Controller
         Post::find($id)->delete();
         return response()->json(['success' =>true]);
 
+    }
+
+    public function getUser($id){
+        $user = User::find($id);
+        return response()->json(['user' => $user]);
     }
 }

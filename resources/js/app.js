@@ -11,6 +11,7 @@ window.Vue = require('vue');
 import Vue from 'vue';
 import Posts from './components/posts/posts';
 import Postadd from './components/posts/add';
+import Viewpost from './components/post_view/view';
 
 import PortalVue from 'portal-vue'
 
@@ -50,5 +51,7 @@ const app = new Vue({
         Posts
         ,
         Postadd
+        ,
+        Viewpost
     }
 });
